@@ -12,6 +12,7 @@ import br.com.caelum.vraptor.Result;
 import collections.Newsletter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 
 @Resource
 @Path("/newsletter")
@@ -20,14 +21,9 @@ public class NewsletterController {
     private final Result result;
     private final CollectionManager cm;
 
-    public NewsletterController(Result result) {
+    public NewsletterController(Result result, ServletContext context) {
         this.result = result;
-        //tenta se conectar no localhost porta padrao usando a base admin
-        //cm = CollectionManagerFactory.createCollectionManager();
-        //tenta criar uma conexao com as informaçoes de arquivos de configuracao
-        //na pasta conf, aceita os arquivos application.conf, database.conf, database.properties, database.config
-        //se essa conexao ja tenha sido feita em algum momento na vm, ele recupera a instancia da mesma.
-        cm = CollectionManagerFactory.setup();
+        cm = CollectionManagerFactory.setup(context);
     }
 
     public void index() {
